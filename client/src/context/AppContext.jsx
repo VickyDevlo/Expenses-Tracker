@@ -9,10 +9,18 @@ export const AppProvider = ({ children }) => {
     const saved = localStorage.getItem("expenses");
     return saved ? JSON.parse(saved) : [];
   });
+  const [editingExpense, setEditingExpense] = useState(null);
 
   const addExpenses = (expense) => {
     setExpenses((prev) => [...prev, expense]);
   };
+    const updateExpense = (updatedExpense) => {
+    setExpenses((prev) =>
+      prev.map((item) => (item.id === updatedExpense.id ? updatedExpense : item))
+    );
+    setEditingExpense(null);
+  };
+
 
   const deleteExpenses = (id) => {
     setExpenses((prev) => prev.filter((item) => item.id !== id));
@@ -26,6 +34,9 @@ export const AppProvider = ({ children }) => {
     expenses,
     setExpenses,
     addExpenses,
+    editingExpense,
+    setEditingExpense,
+    updateExpense,
     deleteExpenses,
   };
 

@@ -1,25 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
 const ExpensesForm = () => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const { addExpenses } = useAppContext();
+  const { addExpenses, updateExpense, editingExpense, setEditingExpense } =
+    useAppContext();
   const inputRef = useRef();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (!title || !amount) return alert("All fields required");
-    const newExpenses = {
-      id: Date.now(),
+
+    const newExpense = {
+      id: editingExpense ? editingExpense.id : Date.now(),
       title,
-      amount,
+      amount: parseFloat(amount).toFixed(2),
     };
-    addExpenses(newExpenses);
+
+    if (editingExpense) {
+      updateExpense(newExpense);
+    } else {
+      addExpenses(newExpense);
+    }
+
     setTitle("");
     setAmount("");
+    setEditingExpense(null);
     inputRef.current.focus();
   };
+
+  useEffect(() => {
+    if (editingExpense) {
+      setTitle(editingExpense.title);
+      setAmount(editingExpense.amount);
+      inputRef.current.focus();
+    }
+  }, [editingExpense]);
 
   return (
     <form

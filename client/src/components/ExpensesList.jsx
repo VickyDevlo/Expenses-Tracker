@@ -7,7 +7,7 @@ const ExpensesList = () => {
   return (
     <>
       {expenses?.length ? (
-        expenses?.map((expense) => (
+        expenses.map((expense) => (
           <ExpensesItem key={expense.id} expense={expense} />
         ))
       ) : (
