@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
-
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => {
@@ -11,21 +10,30 @@ export const AppProvider = ({ children }) => {
   });
   const [editingExpense, setEditingExpense] = useState(null);
 
+  // Add New Expenses
   const addExpenses = (expense) => {
     setExpenses((prev) => [...prev, expense]);
   };
-    const updateExpense = (updatedExpense) => {
+
+  // Update Selected Expenses
+  const updateExpense = (updatedExpense) => {
     setExpenses((prev) =>
-      prev.map((item) => (item.id === updatedExpense.id ? updatedExpense : item))
+      prev.map((item) =>
+        item.id === updatedExpense.id ? updatedExpense : item
+      )
     );
     setEditingExpense(null);
   };
 
-
+  // Delete Selected Expenses
   const deleteExpenses = (id) => {
-    setExpenses((prev) => prev.filter((item) => item.id !== id));
+    const deleteConfirmation = confirm("Are you sure you want to delete?");
+    if (deleteConfirmation) {
+      setExpenses((prev) => prev.filter((item) => item.id !== id));
+    }
   };
 
+  // Set Expenses In LocalStorage
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [expenses]);
@@ -33,9 +41,9 @@ export const AppProvider = ({ children }) => {
   const value = {
     expenses,
     setExpenses,
-    addExpenses,
     editingExpense,
     setEditingExpense,
+    addExpenses,
     updateExpense,
     deleteExpenses,
   };

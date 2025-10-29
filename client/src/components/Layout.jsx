@@ -11,17 +11,14 @@ const Layout = () => {
   }, 0);
 
   return (
-    <div
-      className="bg-white max-h-[410px] mt-3 overflow-hidden p-6 
-    rounded-md shadow-2xl flex flex-col"
-    >
+    <div className="bg-white max-h-[422px] mt-3 overflow-hidden p-6 rounded-md shadow-2xl flex flex-col">
       <div className="sticky top-0 bg-white z-10">
         <h1 className="mt-2 mb-4 text-xl md:text-3xl font-medium text-center">
           💰 Expense Tracker
         </h1>
         <ExpensesForm />
         {expenses.length ? (
-          <p className="text-gray-800 text-start text-xs md:text-base mt-3 font-bold tracking-wide">
+          <p className="text-gray-600 text-start text-xs md:text-base mt-3 font-bold tracking-wide">
             Total Expenses: ₹{parseFloat(totalAmount).toFixed(2)}
           </p>
         ) : (
