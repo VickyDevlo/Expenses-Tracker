@@ -27,10 +27,7 @@ export const AppProvider = ({ children }) => {
 
   // Delete Selected Expenses
   const deleteExpenses = (id) => {
-    const deleteConfirmation = confirm("Are you sure you want to delete?");
-    if (deleteConfirmation) {
-      setExpenses((prev) => prev.filter((item) => item.id !== id));
-    }
+    setExpenses((prev) => prev.filter((item) => item.id !== id));
   };
 
   // Set Expenses In LocalStorage
