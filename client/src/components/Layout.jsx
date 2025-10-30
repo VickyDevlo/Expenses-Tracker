@@ -17,7 +17,7 @@ const Layout = () => {
     >
       <div className="sticky top-0 bg-white z-10">
         <h1 className="mt-2 mb-4 text-xl md:text-3xl font-medium text-center">
-          💰 Expense Tracker
+          💰 Expenses Tracker
         </h1>
         <ExpensesForm />
       </div>

@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useAppContext } from "../context/AppContext";
 import { RiAddFill, RiRefreshLine } from "react-icons/ri";
+import { v4 as uuidv4 } from "uuid";
 
 const ExpensesForm = () => {
   const [title, setTitle] = useState("");
@@ -8,26 +9,32 @@ const ExpensesForm = () => {
   const inputRef = useRef();
   const { saveExpenses, editingExpense, setEditingExpense } = useAppContext();
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    if (!title || !amount) return alert("All fields required");
+  // ✅ useCallback for performance optimization
+  const onSubmitHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!title || !amount) return alert("All fields required");
 
-    const newExpense = {
-      id: editingExpense ? editingExpense.id : Date.now(),
-      title,
-      amount: parseFloat(amount).toFixed(2),
-    };
+      const newExpense = {
+        id: editingExpense ? editingExpense.id : uuidv4(),
+        title,
+        amount: parseFloat(amount).toFixed(2),
+      };
 
-    if (editingExpense) {
-      saveExpenses(newExpense, "update");
-    } else {
-      saveExpenses(newExpense, "add");
-    }
-    setTitle("");
-    setAmount("");
-    setEditingExpense(null);
-    inputRef.current.focus();
-  };
+      if (editingExpense) {
+        saveExpenses(newExpense, "update");
+      } else {
+        saveExpenses(newExpense, "add");
+      }
+      e.target.reset();
+
+      setTitle("");
+      setAmount("");
+      setEditingExpense(null);
+      inputRef.current.focus();
+    },
+    [title, amount, editingExpense, saveExpenses, setEditingExpense]
+  );
 
   useEffect(() => {
     if (editingExpense) {
@@ -40,6 +47,8 @@ const ExpensesForm = () => {
     }
   }, [editingExpense]);
 
+  const isdisabled = !title || !amount;
+
   return (
     <form
       onSubmit={onSubmitHandler}
@@ -47,30 +56,39 @@ const ExpensesForm = () => {
     >
       <input
         type="text"
+        name="title"
         ref={inputRef}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Expenses title"
+        aria-label="Expense title"
+        autoFocus
         className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-md:w-full"
       />
+
       <input
         type="text"
+        name="amount"
         inputMode="decimal"
         value={amount}
         onChange={(e) => {
           const val = e.target.value;
-          if (/^\d*\.?\d*$/.test(val)) {
-            setAmount(val);
-          }
+          if (/^\d*\.?\d*$/.test(val)) setAmount(val);
         }}
         placeholder="₹ amount"
+        aria-label="Expense amount"
         className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-md:w-full"
       />
 
       <button
         type="submit"
-        className="bg-green-800 text-xl text-white px-4 py-0.5 rounded-sm cursor-pointer flex items-center justify-center gap-2
-      hover:bg-green-700 transition-colors duration-300"
+        aria-label={editingExpense ? "Update expense" : "Add expense"}
+        disabled={isdisabled}
+        className={` text-xl text-white px-4 py-0.5 rounded-sm flex items-center justify-center gap-2 transition-colors duration-300 ${
+          isdisabled
+            ? "cursor-not-allowed opacity-50 bg-gray-500"
+            : "cursor-pointer bg-green-800 hover:bg-green-700"
+        }`}
       >
         <span className="md:hidden">
           {editingExpense ? (

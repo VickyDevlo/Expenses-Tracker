@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AppContext = createContext();
 export const useAppContext = () => useContext(AppContext);
@@ -35,17 +35,24 @@ export const AppProvider = ({ children }) => {
 
   // Set Expenses In LocalStorage
   useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
+    try {
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+    } catch (err) {
+      console.error("Failed to save expenses:", err);
+    }
   }, [expenses]);
 
-  const value = {
-    expenses,
-    setExpenses,
-    editingExpense,
-    setEditingExpense,
-    saveExpenses,
-    deleteExpenses,
-  };
+  const value = useMemo(
+    () => ({
+      expenses,
+      setExpenses,
+      editingExpense,
+      setEditingExpense,
+      saveExpenses,
+      deleteExpenses,
+    }),
+    [expenses, editingExpense]
+  );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
