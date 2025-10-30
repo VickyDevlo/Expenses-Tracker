@@ -12,7 +12,7 @@ const Layout = () => {
 
   return (
     <div
-      className="bg-white md:w-[550px] max-h-[422px] mt-3 mx-3 md:mx-auto 
+      className="bg-white lg:w-[550px] max-h-[422px] mt-3 mx-3 md:mx-auto 
     overflow-hidden p-4 sm:p-6 rounded-md shadow-2xl flex flex-col"
     >
       <div className="sticky top-0 bg-white z-10">
