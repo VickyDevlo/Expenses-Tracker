@@ -12,7 +12,7 @@ export const AppProvider = ({ children }) => {
 
   // Add New Expenses
   const addExpenses = (expense) => {
-    setExpenses((prev) => [...prev, expense]);
+    setExpenses((prev) => [expense, ...prev]);
   };
 
   // Update Selected Expenses
@@ -28,6 +28,7 @@ export const AppProvider = ({ children }) => {
   // Delete Selected Expenses
   const deleteExpenses = (id) => {
     setExpenses((prev) => prev.filter((item) => item.id !== id));
+     setEditingExpense((current) => (current && current.id === id ? null : current));
   };
 
   // Set Expenses In LocalStorage

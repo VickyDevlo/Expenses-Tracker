@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { RiAddFill } from "react-icons/ri";
+import { RiAddFill, RiRefreshLine } from "react-icons/ri";
 
 const ExpensesForm = () => {
   const [title, setTitle] = useState("");
@@ -24,7 +24,6 @@ const ExpensesForm = () => {
     } else {
       addExpenses(newExpense);
     }
-
     setTitle("");
     setAmount("");
     setEditingExpense(null);
@@ -36,6 +35,9 @@ const ExpensesForm = () => {
       setTitle(editingExpense.title);
       setAmount(editingExpense.amount);
       inputRef.current.focus();
+    } else {
+      setTitle("");
+      setAmount("");
     }
   }, [editingExpense]);
 
@@ -72,10 +74,14 @@ const ExpensesForm = () => {
       hover:bg-green-700 transition-colors duration-300"
       >
         <span className="md:hidden">
-          <RiAddFill size={24} />
+          {editingExpense ? (
+            <RiRefreshLine size={24} />
+          ) : (
+            <RiAddFill size={24} />
+          )}
         </span>
         <span className="hidden md:inline text-sm py-0.5 font-medium tracking-wide">
-          Add
+          {editingExpense ? "Update" : "Add"}
         </span>
       </button>
     </form>
