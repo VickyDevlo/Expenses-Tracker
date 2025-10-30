@@ -19,13 +19,13 @@ const ExpensesItem = ({ expense }) => {
             onClick={() => setEditingExpense(expense)}
             className="text-sm text-white cursor-pointer"
           >
-            <GrEdit className="text-sm md:text-base text-blue-500 hover:scale-125 transition-all duration-300" />
+            <GrEdit className="text-base text-blue-500 hover:scale-125 transition-all duration-300" />
           </button>
           <button
             onClick={() => setOpen(true)}
             className="text-sm text-white cursor-pointer"
           >
-            <RiDeleteBin6Line className="text-sm md:text-base text-[#e81f54] hover:scale-125 transition-all duration-300" />
+            <RiDeleteBin6Line className="text-base text-[#e81f54] hover:scale-125 transition-all duration-300" />
           </button>
         </div>
       </div>

@@ -10,25 +10,27 @@ export const AppProvider = ({ children }) => {
   });
   const [editingExpense, setEditingExpense] = useState(null);
 
-  // Add New Expenses
-  const addExpenses = (expense) => {
-    setExpenses((prev) => [expense, ...prev]);
-  };
-
-  // Update Selected Expenses
-  const updateExpense = (updatedExpense) => {
-    setExpenses((prev) =>
-      prev.map((item) =>
-        item.id === updatedExpense.id ? updatedExpense : item
-      )
-    );
+  // Add New / Update Expenses
+  const saveExpenses = (expense, action) => {
+    if (!expense || !action) return;
+    setExpenses((prev) => {
+      if (action === "add") {
+        return [expense, ...prev];
+      }
+      if (action === "update") {
+        return prev.map((item) => (item.id === expense.id ? expense : item));
+      }
+      return prev;
+    });
     setEditingExpense(null);
   };
 
   // Delete Selected Expenses
   const deleteExpenses = (id) => {
     setExpenses((prev) => prev.filter((item) => item.id !== id));
-     setEditingExpense((current) => (current && current.id === id ? null : current));
+    setEditingExpense((current) =>
+      current && current.id === id ? null : current
+    );
   };
 
   // Set Expenses In LocalStorage
@@ -41,8 +43,7 @@ export const AppProvider = ({ children }) => {
     setExpenses,
     editingExpense,
     setEditingExpense,
-    addExpenses,
-    updateExpense,
+    saveExpenses,
     deleteExpenses,
   };
 

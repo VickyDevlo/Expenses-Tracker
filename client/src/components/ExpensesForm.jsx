@@ -5,9 +5,8 @@ import { RiAddFill, RiRefreshLine } from "react-icons/ri";
 const ExpensesForm = () => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
-  const { addExpenses, updateExpense, editingExpense, setEditingExpense } =
-    useAppContext();
   const inputRef = useRef();
+  const { saveExpenses, editingExpense, setEditingExpense } = useAppContext();
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -20,9 +19,9 @@ const ExpensesForm = () => {
     };
 
     if (editingExpense) {
-      updateExpense(newExpense);
+      saveExpenses(newExpense, "update");
     } else {
-      addExpenses(newExpense);
+      saveExpenses(newExpense, "add");
     }
     setTitle("");
     setAmount("");
