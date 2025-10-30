@@ -31,14 +31,14 @@ const ExpensesItem = ({ expense }) => {
       </div>
       <Modal open={deleteOpen} onClose={() => setDeleteOpen(false)}>
         <div className="flex flex-col items-center justify-center">
-          <h2 className="text-xl md:text-2xl font-bold">Are you sure?</h2>
+          <h2 className="text-xl font-bold">Are you sure?</h2>
           <p className="text-sm text-center text-[#666666] mt-2">
-            This will delete the expenses, you cannot undo this action
+            You want to remove this record from your expenses?
           </p>
           <div className="mt-3 grid grid-cols-2 gap-10 items-center">
             <button
               onClick={() => setDeleteOpen(false)}
-              className="w-24 md:w-48 h-11 text-gray-700 border
+              className="px-4 py-1 text-gray-700 border
                border-gray-400 hover:bg-gray-100 font-medium rounded 
                cursor-pointer transition-colors duration-300"
             >
@@ -46,8 +46,9 @@ const ExpensesItem = ({ expense }) => {
             </button>
             <button
               onClick={() => deleteExpenses(id)}
-              className="w-24 md:w-48 h-11 py-4 max-xl:py-3 text-white flex justify-center items-center gap-4 bg-[#d36482]
-               hover:bg-[#df5479] border-0 outline-none rounded cursor-pointer transition-colors duration-300"
+              className="px-4 py-1 text-white flex justify-center items-center 
+              gap-4 bg-[#d36482] hover:bg-[#df5479] border-0 outline-none
+              rounded cursor-pointer transition-colors duration-300"
             >
               Delete
             </button>

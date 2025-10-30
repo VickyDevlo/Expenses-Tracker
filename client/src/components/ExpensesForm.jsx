@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { RiAddFill } from "react-icons/ri";
 
 const ExpensesForm = () => {
   const [title, setTitle] = useState("");
@@ -67,10 +68,15 @@ const ExpensesForm = () => {
 
       <button
         type="submit"
-        className="bg-green-800 text-xl text-white px-4 py-0.5 rounded-sm cursor-pointer
+        className="bg-green-800 text-xl text-white px-4 py-0.5 rounded-sm cursor-pointer flex items-center justify-center gap-2
       hover:bg-green-700 transition-colors duration-300"
       >
-        +
+        <span className="md:hidden">
+          <RiAddFill size={24} />
+        </span>
+        <span className="hidden md:inline text-sm py-0.5 font-medium tracking-wide">
+          Add
+        </span>
       </button>
     </form>
   );
