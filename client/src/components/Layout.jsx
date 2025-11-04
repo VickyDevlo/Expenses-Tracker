@@ -14,9 +14,7 @@ const Layout = () => {
   }, 0);
 
   return (
-    <div
-      className="bg-white  w-full max-w-[550px] md:max-w-[600px] lg:max-w-[700px] max-h-[422px] mt-3 mx-auto px-3 sm:px-4 md:px-6 overflow-hidden p-3 sm:p-4 md:p-6 rounded-md shadow-2xl flex flex-col"
-    >
+    <div className="bg-white w-full max-w-[550px] md:max-w-[600px] lg:max-w-[700px] max-h-[422px] mt-3 mx-auto px-3 sm:px-4 md:px-6 overflow-hidden p-3 sm:p-4 md:p-6 rounded-md shadow-2xl flex flex-col">
       <div className="flex justify-end">
         <button
           onClick={() => navigate("/deleted-expenses")}

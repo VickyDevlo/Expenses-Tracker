@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { IoMdArrowBack } from "react-icons/io";
-import { AiTwotoneDelete } from "react-icons/ai";
 import { useState } from "react";
 import { Modal } from "../shared/Modal";
+import DeletedExpenseItem from "./DeletedExpenseItem";
 
 const DeleteExpenses = () => {
   const [open, setOpen] = useState(false);
-  const [deletedId, setDeletedId] = useState(null);
+  const [deletedId] = useState(null);
   const { deletedExpenses, setDeletedExpenses } = useAppContext();
   const navigate = useNavigate();
 
@@ -17,9 +17,8 @@ const DeleteExpenses = () => {
 
   return (
     <>
-      <div
-        className="bg-red-50 w-full max-w-[550px] md:max-w-[600px] lg:max-w-[700px] max-h-[422px] mt-3 mx-auto px-3 sm:px-4 md:px-6 overflow-hidden p-3 sm:p-4 md:p-6 rounded-md shadow-2xl flex flex-col"
-      >
+      <div className="bg-white w-full max-w-[550px] md:max-w-[600px] 
+      lg:max-w-[700px] max-h-[422px] mt-3 mx-auto px-3 sm:px-4 md:px-6 overflow-hidden p-3 sm:p-4 md:p-6 rounded-md shadow-2xl flex flex-col">
         <div className="flex justify-start">
           <button
             onClick={() => navigate("/")}
@@ -34,36 +33,17 @@ const DeleteExpenses = () => {
         >
           Deleted Expenses
         </h1>
-        <ul className="space-y-3">
-          {deletedExpenses.length ? (
-            deletedExpenses.map((item) => (
-              <li
-                key={item.id}
-                className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] 
-              text-base font-semibold"
-              >
-                <p className="font-semibold text-gray-800 capitalize">
-                  {item.title || "Untitled Expense"}
-                </p>
-                <p className="text-gray-600 text-sm">₹{item.amount}</p>
-
-                <button
-                  onClick={() => {
-                    setOpen(true);
-                    setDeletedId(item.id);
-                  }}
-                  className="cursor-pointer"
-                >
-                  <AiTwotoneDelete size={20} color="red" />
-                </button>
-              </li>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 text-sm">
-              No expenses deleted yet!
-            </p>
-          )}
-        </ul>
+        {deletedExpenses?.length ? (
+          <div className="flex flex-col gap-3">
+            {deletedExpenses.map((exp) => (
+              <DeletedExpenseItem key={exp.id} deletedExpense={exp} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">
+            Nothing to show yet. Add your first expense!
+          </p>
+        )}
       </div>
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="flex flex-col items-center justify-center">

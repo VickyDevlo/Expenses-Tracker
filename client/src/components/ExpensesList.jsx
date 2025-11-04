@@ -11,7 +11,9 @@ const ExpensesList = () => {
           <ExpensesItem key={expense.id} expense={expense} />
         ))
       ) : (
-        <p className="text-center text-gray-500">Nothing to show yet. Add your first expense!</p>
+        <p className="text-center text-gray-500">
+          Nothing to show yet. Add your first expense!
+        </p>
       )}
     </>
   );
