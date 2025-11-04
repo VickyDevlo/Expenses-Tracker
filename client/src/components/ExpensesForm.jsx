@@ -63,7 +63,7 @@ const ExpensesForm = () => {
         placeholder="Expenses title"
         aria-label="Expense title"
         autoFocus
-        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-md:w-full"
+        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-lg:w-full"
       />
 
       <input
@@ -77,7 +77,7 @@ const ExpensesForm = () => {
         }}
         placeholder="₹ amount"
         aria-label="Expense amount"
-        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-md:w-full"
+        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-lg:w-full"
       />
 
       <button
