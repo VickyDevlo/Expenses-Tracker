@@ -52,7 +52,7 @@ const ExpensesForm = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex flex-wrap max-md:flex-col items-center gap-3 my-3"
+      className="flex justify-center flex-wrap max-md:flex-col items-center gap-3 my-3"
     >
       <input
         type="text"
