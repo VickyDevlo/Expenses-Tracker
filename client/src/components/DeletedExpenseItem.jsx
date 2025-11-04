@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { AiTwotoneDelete } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { Modal } from "../shared/Modal";
 import { useAppContext } from "../context/AppContext";
-import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
 
 const DeletedExpenseItem = ({ deletedExpense }) => {
   const [open, setOpen] = useState(false);
@@ -14,19 +13,30 @@ const DeletedExpenseItem = ({ deletedExpense }) => {
     setDeletedExpenses((prev) => prev.filter((item) => item.id !== id));
   };
 
+  useEffect(() => {
+    const TWO_DAYS_IN_MS = 2 * 24 * 60 * 60 * 1000;
+    const timer = setTimeout(() => {
+      removeData(deletedExpense.id);
+    }, TWO_DAYS_IN_MS);
+
+    return () => clearTimeout(timer);
+  }, [deletedExpense.id]);
+
   return (
     <div
-      className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] text-base 
-      font-semibold"
+      className="flex flex-col md:flex-row md:items-center md:justify-between 
+      bg-red-200 rounded py-2 px-3 md:py-2 md:px-4 max-md:text-[13px] text-base font-semibold gap-1"
     >
-      <h2 className="max-md:w-25 w-35 truncate capitalize">{title}</h2>
-      <span className="">₹ {amount}</span>
-      <button
-        onClick={() => setOpen(true)}
-        className="cursor-pointer hover:text-red-800 transition-colors"
-      >
-        <RiDeleteBin6Line size={22} />
-      </button>
+      <div className="flex items-center w-full justify-between gap-3">
+         <h2 className="max-md:w-25 w-35 truncate capitalize">{title}</h2>
+        <span>₹ {amount}</span>
+        <button
+          onClick={() => setOpen(true)}
+          className="cursor-pointer hover:text-red-800 transition-colors"
+        >
+          <RiDeleteBin6Line size={22} />
+        </button>
+      </div>
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <div className="flex flex-col items-center justify-center">

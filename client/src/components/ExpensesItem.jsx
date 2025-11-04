@@ -12,8 +12,7 @@ const ExpensesItem = ({ expense }) => {
   return (
     <>
       <div
-        className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] text-base 
-      font-semibold"
+        className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] text-base font-semibold"
       >
         <h2 className="max-md:w-25 w-35 truncate capitalize">{title}</h2>
         <span className="">₹ {amount}</span>

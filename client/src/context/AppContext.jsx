@@ -43,7 +43,7 @@ export const AppProvider = ({ children }) => {
       const toDelete = prev.find((item) => item.id === id);
       if (toDelete) {
         setDeletedExpenses((deletedPrev) => {
-          // Prevent duplicate entries
+          
           const alreadyExists = deletedPrev.some(
             (item) => item.id === toDelete.id
           );

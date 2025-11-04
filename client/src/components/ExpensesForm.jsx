@@ -9,7 +9,6 @@ const ExpensesForm = () => {
   const inputRef = useRef();
   const { saveExpenses, editingExpense, setEditingExpense } = useAppContext();
 
-  // ✅ useCallback for performance optimization
   const onSubmitHandler = useCallback(
     (e) => {
       e.preventDefault();
@@ -26,8 +25,8 @@ const ExpensesForm = () => {
       } else {
         saveExpenses(newExpense, "add");
       }
-      e.target.reset();
 
+      e.target.reset();
       setTitle("");
       setAmount("");
       setEditingExpense(null);
@@ -52,8 +51,9 @@ const ExpensesForm = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex justify-center flex-wrap max-md:flex-col items-center gap-3 my-3"
+      className="flex flex-wrap md:flex-nowrap justify-center items-center gap-3 my-3"
     >
+      {/* Title Input */}
       <input
         type="text"
         name="title"
@@ -63,9 +63,10 @@ const ExpensesForm = () => {
         placeholder="Expenses title"
         aria-label="Expense title"
         autoFocus
-        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-lg:w-full"
+        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full md:w-60"
       />
 
+      {/* Amount Input */}
       <input
         type="text"
         name="amount"
@@ -77,14 +78,15 @@ const ExpensesForm = () => {
         }}
         placeholder="₹ amount"
         aria-label="Expense amount"
-        className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none capitalize max-lg:w-full"
+        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full md:w-60"
       />
 
+      {/* Submit Button */}
       <button
         type="submit"
         aria-label={editingExpense ? "Update expense" : "Add expense"}
         disabled={isdisabled}
-        className={` text-xl text-white px-4 py-0.5 rounded-sm flex items-center justify-center gap-2 transition-colors duration-300 ${
+        className={`text-xl text-white px-4 py-1 rounded-sm flex items-center justify-center gap-2 transition-colors duration-300 min-w-[100px] ${
           isdisabled
             ? "cursor-not-allowed opacity-50 bg-gray-500"
             : "cursor-pointer bg-green-800 hover:bg-green-700"
