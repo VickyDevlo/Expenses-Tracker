@@ -4,15 +4,24 @@ const AppContext = createContext();
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => {
+  // ✅ Initialize saved expenses
   const [expenses, setExpenses] = useState(() => {
     const saved = localStorage.getItem("expenses");
     return saved ? JSON.parse(saved) : [];
   });
+
+  // ✅ Initialize deleted expenses
+  const [deletedExpenses, setDeletedExpenses] = useState(() => {
+    const deleteExp = localStorage.getItem("deleteExp");
+    return deleteExp ? JSON.parse(deleteExp) : [];
+  });
+
   const [editingExpense, setEditingExpense] = useState(null);
 
-  // Add New / Update Expenses
+  // ✅ Add New / Update Expense
   const saveExpenses = (expense, action) => {
     if (!expense || !action) return;
+
     setExpenses((prev) => {
       if (action === "add") {
         return [expense, ...prev];
@@ -22,18 +31,35 @@ export const AppProvider = ({ children }) => {
       }
       return prev;
     });
+
     setEditingExpense(null);
   };
 
-  // Delete Selected Expenses
+  // ✅ Delete Expense and store in deletedExpenses
   const deleteExpenses = (id) => {
-    setExpenses((prev) => prev.filter((item) => item.id !== id));
+    if (!id) return;
+
+    setExpenses((prev) => {
+      const toDelete = prev.find((item) => item.id === id);
+      if (toDelete) {
+        setDeletedExpenses((deletedPrev) => {
+          // Prevent duplicate entries
+          const alreadyExists = deletedPrev.some(
+            (item) => item.id === toDelete.id
+          );
+          if (alreadyExists) return deletedPrev;
+          return [toDelete, ...deletedPrev];
+        });
+      }
+      return prev.filter((item) => item.id !== id);
+    });
+
     setEditingExpense((current) =>
       current && current.id === id ? null : current
     );
   };
 
-  // Set Expenses In LocalStorage
+  // ✅ Sync active expenses with localStorage
   useEffect(() => {
     try {
       localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -42,16 +68,27 @@ export const AppProvider = ({ children }) => {
     }
   }, [expenses]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem("deleteExp", JSON.stringify(deletedExpenses));
+    } catch (err) {
+      console.error("Failed to delete expenses:", err);
+    }
+  }, [deletedExpenses]);
+
+  // ✅ Memoize context value for performance
   const value = useMemo(
     () => ({
       expenses,
       setExpenses,
+      deletedExpenses,
+      setDeletedExpenses,
       editingExpense,
       setEditingExpense,
       saveExpenses,
       deleteExpenses,
     }),
-    [expenses, editingExpense]
+    [expenses, deletedExpenses, editingExpense]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

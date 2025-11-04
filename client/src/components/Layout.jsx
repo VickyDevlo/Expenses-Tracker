@@ -1,9 +1,12 @@
+import { FaRegTrashAlt } from "react-icons/fa";
 import { useAppContext } from "../context/AppContext";
 import ExpensesForm from "./ExpensesForm";
 import ExpensesList from "./ExpensesList";
+import { useNavigate } from "react-router-dom";
 
 const Layout = () => {
   const { expenses } = useAppContext();
+  const navigate = useNavigate();
 
   const totalAmount = expenses.reduce((sum, item) => {
     const amount = Number(item.amount);
@@ -15,6 +18,14 @@ const Layout = () => {
       className="bg-white lg:w-[550px] max-h-[422px] mt-3 mx-3 md:mx-auto 
     overflow-hidden p-4 sm:p-6 rounded-md shadow-2xl flex flex-col"
     >
+      <div className="flex justify-end">
+        <button
+          onClick={() => navigate("/deleted-expenses")}
+          className="cursor-pointer p-1 hover:scale-110 hover:text-red-600 transition-all"
+        >
+          <FaRegTrashAlt size={20} />
+        </button>
+      </div>
       <div className="sticky top-0 bg-white z-10">
         <h1 className="mt-2 mb-4 text-xl md:text-3xl font-medium text-center">
           💰 Expenses Tracker

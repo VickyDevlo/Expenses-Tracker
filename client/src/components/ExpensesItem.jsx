@@ -11,7 +11,10 @@ const ExpensesItem = ({ expense }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] text-base font-semibold">
+      <div
+        className="flex items-center justify-between max-md:gap-2 py-1.5 md:py-2 px-1.5 md:px-3 bg-gray-200 rounded max-md:text-[13px] text-base 
+      font-semibold"
+      >
         <h2 className="max-md:w-25 w-35 truncate capitalize">{title}</h2>
         <span className="">₹ {amount}</span>
         <div className="flex items-center max-md:gap-1 gap-3">
@@ -19,13 +22,19 @@ const ExpensesItem = ({ expense }) => {
             onClick={() => setEditingExpense(expense)}
             className="text-sm text-white cursor-pointer"
           >
-            <GrEdit className="text-base text-blue-500 hover:scale-125 transition-all duration-300" />
+            <GrEdit
+              className="text-base text-blue-500 hover:scale-125 
+            transition-all duration-300"
+            />
           </button>
           <button
             onClick={() => setOpen(true)}
             className="text-sm text-white cursor-pointer"
           >
-            <RiDeleteBin6Line className="text-base text-[#e81f54] hover:scale-125 transition-all duration-300" />
+            <RiDeleteBin6Line
+              className="text-base text-[#e81f54] 
+            hover:scale-125 transition-all duration-300"
+            />
           </button>
         </div>
       </div>
