@@ -78,13 +78,13 @@ const ExpensesForm = () => {
         }}
         placeholder="₹ amount"
         aria-label="Expense amount"
-        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full lg:w-60"
+        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full lg :w-60"
       />
 
       {/* Submit Button */}
       <button
         type="submit"
-        aria-label={editingExpense ? "Update expense" : "Add expense"}
+        aria-label={editingExpense ? "Update" : "Add"}
         disabled={isdisabled}
         className={`text-xl text-white px-4 py-1 rounded-sm flex items-center justify-center gap-2 transition-colors duration-300 min-w-[100px] ${
           isdisabled
