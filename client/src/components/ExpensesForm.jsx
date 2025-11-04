@@ -63,7 +63,7 @@ const ExpensesForm = () => {
         placeholder="Expenses title"
         aria-label="Expense title"
         autoFocus
-        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full md:w-60"
+        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full lg:w-60"
       />
 
       {/* Amount Input */}
@@ -78,7 +78,7 @@ const ExpensesForm = () => {
         }}
         placeholder="₹ amount"
         aria-label="Expense amount"
-        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full md:w-60"
+        className="text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none capitalize w-full lg:w-60"
       />
 
       {/* Submit Button */}
